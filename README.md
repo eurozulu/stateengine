@@ -16,17 +16,15 @@ There are three Actions:
 - Add Bottle
 
 The machine begins in the `Empty` state.  
-In Empty only the `Add Bottle` action will change the state to `Locked`.
+In `Empty` state only the `Add Bottle` action will change the state to `Locked`.  
 `Push button` and `Insert coin` have no effect, returning to Empty state.
 
-In `Locked` state only the `Insert coin` action will move to `Unlocked`,
+In `Locked` state only the `Insert coin` action will move to `Unlocked`.  
 `Push button` has no effect.  `Add Bottle` will increase the bottles but leave in
 the `Locked` state.
 
-`Insert Coin` in the `Locked` state moves to the `Unlocked` state, where `Button Push`
-will move it back to Locked.
-If there are still unused coins, the machine is held in `Unlocked`
-state until all the coins are exhausted, before returning to `Locked` state.
+In `Unlocked` state only `Push Button` action will move to `Locked` or remain in `Unlocked` depending on Credit.
+If there are unused coins, the machine is held in `Unlocked`, otherwise it returns to `Locked`
 
 `Insert coin` is rejected when the machine has run out of bottle.
 
@@ -38,14 +36,14 @@ Each State has an actionMap of its own, defining which
 actions it accepts and which state those actions will move to.
 On an action received, the resulting mapped state becomes the next state.
 
-Vending machine is built ontop of the State.  This contains
+Vending machine is built on top of the State.  This contains
 the state of the Vending machine:
 Its coins, bottle and current state.  
 On each transition of state, the vending machine checks its own status
 and may modify the transition of state accordingly.  
 
-e.g. When Push button action is given in Unlocked State,
-The usual transition is to return to Locked.
+e.g. When `Push button` action is given in `Unlocked` State,
+The usual transition is to return to `Locked`.
 If vending machine still has unused coins, it prevents this,
-holding the state of unlocked until all the coins are exhuasted.
+holding the state of `Unlocked` until all the coins are exhausted.
 
