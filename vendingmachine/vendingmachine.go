@@ -36,9 +36,11 @@ func (s *vendingMachine) PerformAction(action Action) State {
 	case AddBottle:
 		s.bottles++
 	case InsertCoin:
+		// Only accept if there are the bottles available
 		if s.coins < s.bottles {
 			s.coins++
 		} else {
+			// out of stock, reject and remain in same state
 			s.rejectFunc()
 			ns = s.state
 		}
@@ -46,6 +48,7 @@ func (s *vendingMachine) PerformAction(action Action) State {
 		if s.state == Unlocked {
 			s.coins--
 			s.bottles--
+			// If coins still left, remain in unlocked
 			if s.coins > 0 {
 				ns = Unlocked
 			}
